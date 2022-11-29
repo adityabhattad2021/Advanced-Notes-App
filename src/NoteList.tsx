@@ -93,6 +93,7 @@ function NoteList({ availableTags, notes }: NoteListProps) {
 					);
 				})}
 			</Row>
+			<EditTagModal />
 		</Fragment>
 	);
 }
