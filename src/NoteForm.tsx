@@ -10,14 +10,21 @@ type NoteFormProps = {
     onSubmit:(data:NoteData)=>void
     onAddTag:(tag:Tag)=>void
     availableTags:Tag[]
-}
+}  & Partial<NoteData>
 
 
-function NoteForm({onSubmit,onAddTag,availableTags}:NoteFormProps) {
+function NoteForm({
+    onSubmit,
+    onAddTag,
+    availableTags,
+    title="",
+    markdown="",
+    tags=[],
+}:NoteFormProps) {
 
     const titleRef = useRef<HTMLInputElement>(null);
     const markdownRef = useRef<HTMLTextAreaElement>(null);
-    const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
+    const [selectedTags, setSelectedTags] = useState<Tag[]>(tags);
     const navigate = useNavigate()
 
     function handleSubmit(e:FormEvent){
@@ -42,7 +49,7 @@ function NoteForm({onSubmit,onAddTag,availableTags}:NoteFormProps) {
 						<Col>
 							<Form.Group controlId="title">
 								<Form.Label>Title</Form.Label>
-								<Form.Control required ref={titleRef} />
+								<Form.Control defaultValue={title} required ref={titleRef} />
 							</Form.Group>
 						</Col>
 						<Col>
@@ -79,7 +86,7 @@ function NoteForm({onSubmit,onAddTag,availableTags}:NoteFormProps) {
 					</Row>
                     <Form.Group controlId="markdown">
                         <Form.Label>Body</Form.Label>
-                        <Form.Control required as="textarea" rows={15} ref={markdownRef} />
+                        <Form.Control required as="textarea" rows={15} ref={markdownRef} defaultValue={markdown} />
                     </Form.Group>
                     <Stack direction="horizontal" gap={2} className="justify-content-between">
                         <Button type="submit" variant="primary">
